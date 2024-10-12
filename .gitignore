@@ -1,0 +1,15 @@
+_output
+
+/.fleet
+/.vscode
+/_build*
+
+*.exe
+*.dll
+*.a
+*.so
+*.dylib
+*.out*
+*.wasm
+*.wasm.*
+
