@@ -10,7 +10,6 @@ import (
 // type ::= (type id? functype)
 
 // (type $$onFree (func (param i32)))
-// (type $$wa.runtime.comp (func (param i32) (param i32) (result i32)))
 func (p *parser) parseModuleSection_type() *ast.TypeSection {
 	p.acceptToken(token.TYPE)
 

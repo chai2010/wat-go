@@ -1,4 +1,4 @@
-(module $__walang__
+(module $wat-go
 
 (func $runtime.printI64 (param $v i64))
 

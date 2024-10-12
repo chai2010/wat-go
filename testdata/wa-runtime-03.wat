@@ -1,6 +1,4 @@
-(module $__walang__
-
-;; Copyright 2023 The Wa Authors. All rights reserved.
+(module $wat-go
 
 (memory $memory 1024)
 
@@ -13,8 +11,6 @@
 (global $__stack_ptr (mut i32) (i32.const 1024))     ;; index=0
 (global $__heap_base i32 (i32.const 1048576))     ;; index=1
 (global $__heap_max  i32       (i32.const 67108864)) ;; 64MB, 1024 page
-
-;; Copyright 2023 The Wa Authors. All rights reserved.
 
 (func $runtime.getStackPtr (result i32)
 	global.get $__stack_ptr

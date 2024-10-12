@@ -1,6 +1,4 @@
-(module $__walang__
-
-;; Copyright 2023 The Wa Authors. All rights reserved.
+(module $wat-go
 
 (memory $memory 1024)
 

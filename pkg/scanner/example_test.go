@@ -10,7 +10,7 @@ import (
 )
 
 func ExampleScanner_Scan() {
-	var src = []byte("(module $__walang__)")
+	var src = []byte("(module $wat-go)")
 	var file = token.NewFile("", len(src))
 
 	var s scanner.Scanner
@@ -27,6 +27,6 @@ func ExampleScanner_Scan() {
 	// output:
 	// ( ""
 	// module "module"
-	// IDENT "__walang__"
+	// IDENT "wat-go"
 	// ) ""
 }
