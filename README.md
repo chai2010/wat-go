@@ -147,3 +147,37 @@ static i64_t fn_fib(i64_t n) {
   return $R0.i64;
 }
 ```
+
+## 输出C代码的性能
+
+进入`testdata/bench/wat2c`目录执行以下命令：
+
+```
+$ make
+clang -O0 -o fib_c_native_O0.exe _fib_c_native.c
+wat-go 2c -o fib_wat2c_native.c fib_wat.txt && clang -O0 -o fib_wat2c_native_O0.exe fib_wat2c_main.c
+clang -O1 -o fib_c_native_O1.exe _fib_c_native.c
+wat-go 2c -o fib_wat2c_native.c fib_wat.txt && clang -O1 -o fib_wat2c_native_O1.exe fib_wat2c_main.c
+clang -O3 -o fib_c_native_O3.exe _fib_c_native.c
+wat-go 2c -o fib_wat2c_native.c fib_wat.txt && clang -O3 -o fib_wat2c_native_O3.exe fib_wat2c_main.c
+time ./fib_c_native_O0.exe
+fib(46) = 1836311903
+       11.70 real         9.87 user         0.09 sys
+time ./fib_wat2c_native_O0.exe
+fib(46) = 1836311903
+       31.30 real        27.55 user         0.21 sys
+time ./fib_c_native_O1.exe
+fib(46) = 1836311903
+        4.88 real         4.84 user         0.01 sys
+time ./fib_wat2c_native_O1.exe
+fib(46) = 1836311903
+        5.54 real         4.92 user         0.04 sys
+time ./fib_c_native_O3.exe
+fib(46) = 1836311903
+        5.68 real         5.08 user         0.04 sys
+time ./fib_wat2c_native_O3.exe
+fib(46) = 1836311903
+        5.06 real         4.81 user         0.01 sys
+```
+
+wat转译到C代码在`-O1`和`-O3`优化的执行性能和本地C版本持平.
