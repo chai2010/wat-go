@@ -20,7 +20,7 @@ func WatStrip(path string, src []byte) (watBytes []byte, err error) {
 	m = pass.DoPass()
 
 	var buf bytes.Buffer
-	if err := printer.Fprint(&buf, m); err != nil {
+	if err := printer.FprintIndent(&buf, m, "  "); err != nil {
 		return nil, err
 	}
 

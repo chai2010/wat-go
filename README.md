@@ -2,7 +2,9 @@
 
 目标不是解析完整的 wat 语法, 而是能满足wat-go输出的 wat 格式.
 
-安装: `go install github.com/chai2010/wat-go@master`
+- 安装`wat-go`命令行: `go install github.com/chai2010/wat-go@master`
+- `wat-go strip`子命令: 减小wat文件体积, 只保留导出对象和依赖的代码
+- `wat-go 2c`子命令: 将 wat 代码转为 C 代码
 
 ## Wat 格式的子集
 
@@ -12,12 +14,16 @@
 - 对象前出现的是关联注释, 其他注释全部丢弃
 - 转义字符串扩展: '\n', '\r', '\t', '\\', '\"'
 
-## 例子：Fib
-
-hello.wat:
+fib.wat 代码如下:
 
 ```wat
 (module
+  (func $foo)
+  (func $add (export "add") (param $a i64) (param $b i64) (result i64)
+    local.get $a
+    local.get $b
+    i64.add
+  )
   (func $fib (export "fib") (param $n i64) (result i64)
     local.get $n
     i64.const 2
@@ -38,6 +44,18 @@ hello.wat:
   )
 )
 ```
+
+## 例子：Fib 瘦身
+
+执行以下命令：
+
+```
+$ wat-go strip fib.wat
+```
+
+将删除代码中的 `$foo` 函数。
+
+## 例子：Fib 转为 C 代码
 
 输入以下命令转为C语言代码:
 
@@ -74,8 +92,34 @@ typedef union val_t {
   ref_t ref;
 } val_t;
 
+// func $foo
+static void fn_foo();
+// func $add (param $a i64) (param $b i64) (result i64)
+static i64_t fn_add(i64_t a, i64_t b);
 // func $fib (param $n i64) (result i64)
 static i64_t fn_fib(i64_t n);
+
+// func foo
+static void fn_foo() {
+  u32_t $R_u32;
+  u16_t $R_u16;
+  u8_t  $R_u8;
+  val_t $R0;
+
+}
+
+// func add (param $a i64) (param $b i64) (result i64)
+static i64_t fn_add(i64_t a, i64_t b) {
+  u32_t $R_u32;
+  u16_t $R_u16;
+  u8_t  $R_u8;
+  val_t $R0, $R1;
+
+  $R0.i64 = a;
+  $R1.i64 = b;
+  $R0.i64 = $R0.i64 + $R1.i64;
+  return $R0.i64;
+}
 
 // func fib (param $n i64) (result i64)
 static i64_t fn_fib(i64_t n) {

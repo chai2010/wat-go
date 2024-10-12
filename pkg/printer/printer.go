@@ -12,7 +12,13 @@ import (
 )
 
 func Fprint(output io.Writer, m *ast.Module) error {
-	return new(watPrinter).Fprint(output, m)
+	return FprintIndent(output, m, "\t")
+}
+
+func FprintIndent(output io.Writer, m *ast.Module, indent string) error {
+	p := new(watPrinter)
+	p.indent = indent
+	return p.Fprint(output, m)
 }
 
 type watPrinter struct {
@@ -26,8 +32,6 @@ func (p *watPrinter) Fprint(w io.Writer, m *ast.Module) error {
 	p.m = m
 	p.w = w
 
-	p.indent = "\t"
-
 	fmt.Fprint(p.w, "(module")
 	if p.m.Name != "" {
 		fmt.Fprint(p.w, " $", p.m.Name)
@@ -37,6 +41,7 @@ func (p *watPrinter) Fprint(w io.Writer, m *ast.Module) error {
 		fmt.Fprint(p.w, ")")
 		return nil
 	} else {
+		fmt.Fprintln(p.w)
 		defer fmt.Fprintln(p.w, ")")
 	}
 
