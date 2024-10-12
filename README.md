@@ -2,9 +2,43 @@
 
 目标不是解析完整的 wat 语法, 而是能满足wat-go输出的 wat 格式.
 
-- 安装`wat-go`命令行: `go install github.com/chai2010/wat-go@master`
-- `wat-go strip`子命令: 减小wat文件体积, 只保留导出对象和依赖的代码
+安装和帮助信息:
+
+```
+$ go install github.com/chai2010/wat-go@master
+$ wat-go
+NAME:
+   wat-go - wat-go is a tool for managing Wat source code.
+
+USAGE:
+   main [global options] command [command options] [arguments...]
+
+VERSION:
+   0.1.0
+
+COMMANDS:
+   2c        convert a WebAssembly text file to a C source and header
+   2ll       convert a WebAssembly text file to a llvm-ir file
+   strip     remove unused func and global in WebAssembly text file
+   validate  validate a file in the WebAssembly txt format
+
+GLOBAL OPTIONS:
+   --help, -h     show help (default: false)
+   --version, -v  print the version (default: false)
+
+COPYRIGHT:
+   Copyright 2024 The wat-go Authors. All rights reserved.
+
+See "https://github.com/chai2010/wat-go" for more information.
+```
+
+目前主要有以下几个子命令:
+
 - `wat-go 2c`子命令: 将 wat 代码转为 C 代码
+- `wat-go 2ll`子命令: 将 wat 代码转为 LLVM-IR 代码 (TODO)
+- `wat-go 2wasm`子命令: 将 wat 代码转为 WASM 二进制 (TODO)
+- `wat-go strip`子命令: 减小wat文件体积, 只保留导出对象和依赖的代码
+- `wat-go validate`子命令: 验证 wat 代码运行时栈类型是否正确 (TODO)
 
 ## Wat 格式的子集
 
@@ -44,16 +78,6 @@ fib.wat 代码如下:
   )
 )
 ```
-
-## 例子：Fib 瘦身
-
-执行以下命令：
-
-```
-$ wat-go strip fib.wat
-```
-
-将删除代码中的 `$foo` 函数。
 
 ## 例子：Fib 转为 C 代码
 
@@ -181,3 +205,15 @@ fib(46) = 1836311903
 ```
 
 wat转译到C代码在`-O1`和`-O3`优化的执行性能和本地C版本持平.
+
+
+## 例子：Fib 瘦身
+
+执行以下命令：
+
+```
+$ wat-go strip fib.wat
+```
+
+将删除代码中的 `$foo` 函数。
+

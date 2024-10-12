@@ -8,7 +8,10 @@ import (
 	"strings"
 
 	"github.com/chai2010/wat-go/cmd/wat2c"
+	"github.com/chai2010/wat-go/cmd/wat2ll"
+	"github.com/chai2010/wat-go/cmd/wat2wasm"
 	"github.com/chai2010/wat-go/cmd/watstrip"
+	"github.com/chai2010/wat-go/cmd/watvalidate"
 	"github.com/chai2010/wat-go/pkg/3rdparty/cli"
 )
 
@@ -35,8 +38,13 @@ func main() {
 	}
 
 	cliApp.Commands = []*cli.Command{
-		watstrip.CmdWatStrip,
-		wat2c.CmdWat2c,
+		wat2c.CmdWat2c,             // 翻译到C语言
+		wat2ll.CmdWat2ll,           // 翻译到 LLVM-IR(TODO)
+		wat2wasm.CmdWat2Wasm,       // 翻译到 WebAssembly 二进制格式 (TODO)
+		watstrip.CmdWatStrip,       // 删除未使用对象
+		watvalidate.CmdWatValidate, // 验证 WebAssembly txt 文件(TODO)
+
+		// TODO: objdump, fmt, run, ...
 	}
 
 	cliApp.Run(os.Args)
