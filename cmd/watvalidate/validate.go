@@ -29,8 +29,14 @@ var CmdWatValidate = &cli.Command{
 			os.Exit(1)
 		}
 
-		err = watvalidate.WatValidate(infile, source)
+		fn, ins, err := watvalidate.WatValidate(infile, source)
 		if err != nil {
+			if fn != nil {
+				fmt.Println("func:", fn.Name)
+			}
+			for i, ins := range ins {
+				fmt.Printf("  [%d] %v\n", i, ins)
+			}
 			fmt.Println(err)
 			os.Exit(1)
 		}

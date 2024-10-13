@@ -38,7 +38,7 @@ See "https://github.com/chai2010/wat-go" for more information.
 - `wat-go 2ll`子命令: 将 wat 代码转为 LLVM-IR 代码 (TODO)
 - `wat-go 2wasm`子命令: 将 wat 代码转为 WASM 二进制 (TODO)
 - `wat-go strip`子命令: 减小wat文件体积, 只保留导出对象和依赖的代码
-- `wat-go validate`子命令: 验证 wat 代码运行时栈类型是否正确 (TODO)
+- `wat-go validate`子命令: 验证 wat 代码运行时栈类型是否正确
 
 ## Wat 格式的子集
 
